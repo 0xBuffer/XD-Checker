@@ -1,0 +1,112 @@
+<Window x:Class="XDCheckerRecode.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="SplashWindow" Height="450" Width="280"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="ProgressAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="ProgressFill"
+                             Storyboard.TargetProperty="Width"
+                             From="0" To="220" Duration="0:0:2"
+                             EasingFunction="{x:Null}"/>
+        </Storyboard>
+    </Window.Resources>
+    
+    <Border CornerRadius="16" BorderThickness="1" BorderBrush="#1FFFFFFF">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#1a1a2e" Offset="0"/>
+                <GradientStop Color="#16213e" Offset="0.5"/>
+                <GradientStop Color="#1a1a2e" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="40" ShadowDepth="20" Color="Black" Opacity="0.7"/>
+        </Border.Effect>
+
+        <Grid Margin="30,40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Logo -->
+                <RowDefinition Height="Auto"/> <!-- Title -->
+                <RowDefinition Height="Auto"/> <!-- Version -->
+                <RowDefinition Height="*"/>    <!-- Space -->
+                <RowDefinition Height="Auto"/> <!-- Progress -->
+            </Grid.RowDefinitions>
+
+            <!-- Logo -->
+            <Border Grid.Row="0" Width="80" Height="80" CornerRadius="12" Margin="0,0,0,20">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#007acc" Offset="0"/>
+                        <GradientStop Color="#0056b3" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="4" Opacity="0.3"/>
+                </Border.Effect>
+                <!-- Placeholder Icon: Shield/Check -->
+                <Path Data="M10,25 L20,35 L40,10" Stroke="White" StrokeThickness="5" 
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+            </Border>
+
+            <!-- Title -->
+            <TextBlock Grid.Row="1" Text="XD Checker" FontSize="24" FontWeight="Bold" Foreground="White"
+                       HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,10">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="4" ShadowDepth="2" Opacity="0.5"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Version -->
+            <TextBlock Grid.Row="2" Text="Версия 1.6.1 • Загрузка..." FontSize="12" Foreground="#E6FFFFFF"
+                       HorizontalAlignment="Center" TextAlignment="Center" Margin="0,0,0,20"/>
+
+            <!-- Progress Bar Area -->
+            <StackPanel Grid.Row="4" VerticalAlignment="Bottom">
+                <Grid Height="6" ClipToBounds="True" Margin="0,0,0,15">
+                    <Rectangle Fill="#1AFFFFFF" RadiusX="3" RadiusY="3"/>
+                    <Rectangle x:Name="ProgressFill" HorizontalAlignment="Left" Width="0" RadiusX="3" RadiusY="3">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#007acc" Offset="0"/>
+                                <GradientStop Color="#00aaff" Offset="0.5"/>
+                                <GradientStop Color="#007acc" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                        <Rectangle.Effect>
+                            <DropShadowEffect Color="#007acc" BlurRadius="10" ShadowDepth="0" Opacity="0.6"/>
+                        </Rectangle.Effect>
+                    </Rectangle>
+                </Grid>
+                
+                <TextBlock x:Name="StatusText" Text="Инициализация системы..." Foreground="#B3FFFFFF" FontSize="11" 
+                           HorizontalAlignment="Center" Margin="0,0,0,5"/>
+
+                <StackPanel x:Name="ConsentPanel" Visibility="Collapsed" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                    <CheckBox x:Name="StatsCheckBox" Content="Отправлять анонимную статистику" 
+                              IsChecked="True" Foreground="#cccccc" FontSize="11" Margin="0,0,0,10"
+                              VerticalContentAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    
+                    <Button x:Name="OkButton" Content="OK" Width="80" Height="26" 
+                            Background="#007acc" Foreground="White" BorderThickness="0"
+                            Cursor="Hand" Click="OkButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

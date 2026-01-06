@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- Disable auto-generation of AssemblyInfo to avoid duplicates with existing AssemblyInfo.cs -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>7.3</LangVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>b312014c-6cf8-4965-a61a-50404a71514d.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\Settings.Designer.cs" />
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="b312014c-6cf8-4965-a61a-50404a71514d.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\AnyDesk.exe" />
+    <None Include="Resources\JournalTrace.exe" />
+    <None Include="Resources\everything.exe" />
+    <None Include="Resources\shellbag_analyzer_cleaner.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AnyDesk.exe" />
+    <EmbeddedResource Include="Resources\JournalTrace.exe" />
+    <EmbeddedResource Include="Resources\everything.exe" />
+    <EmbeddedResource Include="Resources\shellbag_analyzer_cleaner.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Xaml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+</Project>

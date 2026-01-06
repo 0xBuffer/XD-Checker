@@ -1,0 +1,135 @@
+<Page x:Class="XDCheckerRecode.CheckPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="CheckPage">
+<Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Controls -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+            <Button x:Name="StartScanButton" 
+                    Content="Start Disk Scan" 
+                    Click="StartScanButton_Click"
+                    Padding="20,10"
+                    Background="#2D2D30"
+                    Foreground="White"
+                    BorderThickness="0"
+                    FontSize="14">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <CheckBox x:Name="FullScanCheckBox" 
+                      Content="Full Scan" 
+                      Foreground="White" 
+                      VerticalAlignment="Center" 
+                      Margin="20,0,0,0"
+                      Checked="FullScanCheckBox_CheckedChanged"
+                      Unchecked="FullScanCheckBox_CheckedChanged">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Grid Margin="20,0,0,0" VerticalAlignment="Center">
+                <CheckBox x:Name="TypeCheckBox" 
+                          Content="Type" 
+                          Foreground="White">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                
+                <Popup IsOpen="{Binding IsChecked, ElementName=TypeCheckBox, Mode=TwoWay}" 
+                       PlacementTarget="{Binding ElementName=TypeCheckBox}" 
+                       StaysOpen="True"
+                       AllowsTransparency="True"
+                       PopupAnimation="Fade">
+                    <Border Background="#252526" BorderBrush="#3E3E42" BorderThickness="1" CornerRadius="4" Padding="10" MinWidth="150">
+                        <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding ExtensionFilters, RelativeSource={RelativeSource AncestorType=Page}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Extension}" 
+                                                  IsChecked="{Binding IsSelected}" 
+                                                  Foreground="White" 
+                                                  Margin="0,2"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </Popup>
+            </Grid>
+        </StackPanel>
+
+        <!-- Status Area -->
+        <StackPanel Grid.Row="1" Margin="0,20">
+            <ProgressBar x:Name="ScanProgressBar" 
+                         Height="10" 
+                         Background="#1E1E1E" 
+                         Foreground="#007ACC"
+                         BorderThickness="0"
+                         IsIndeterminate="False"/>
+            <TextBlock x:Name="StatusTextBlock" 
+                       Text="Ready to scan..." 
+                       Foreground="#AAAAAA" 
+                       Margin="0,10,0,0" 
+                       TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+
+        <!-- Results Table -->
+        <DataGrid x:Name="ResultsGrid" 
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Background="Transparent"
+                  RowBackground="#1E1E1E"
+                  AlternatingRowBackground="#252526"
+                  Foreground="White"
+                  BorderThickness="0"
+                  GridLinesVisibility="None"
+                  HeadersVisibility="Column"
+                  ColumnWidth="*">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#2D2D30"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="10,5"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    <Setter Property="BorderBrush" Value="#3E3E42"/>
+                </Style>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DataGridCell">
+                                <Border Padding="{TemplateBinding Padding}" 
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                        Background="{TemplateBinding Background}" 
+                                        SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File" Binding="{Binding FileName}" Width="2*"/>
+                <DataGridTextColumn Header="Found (Index)" Binding="{Binding FoundReason}" Width="1.5*"/>
+                <DataGridTextColumn Header="Path" Binding="{Binding FilePath}" Width="3*"/>
+                <DataGridTextColumn Header="Time (Opened/Mod)" Binding="{Binding Timestamp}" Width="1.5*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
